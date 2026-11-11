@@ -29,6 +29,12 @@
    	  justify-content: center;
    	  flex-direction: column;
  	  align-items: center;
+      box-sizing: border-box;
+        }
+
+        /* Se asegura que los paddings no rompan el ancho total en celulares */
+        *, *::before, *::after {
+            box-sizing: border-box;
         }
 
         .container {
@@ -113,12 +119,42 @@
         .gasto-fecha { color: #64748b; font-size: 14px; }
 
 	.vid {
-	text-align: center; margin-top: 20px; width: 100%;
+	text-align: center; 
+    margin-top: 20px; 
+    width: 100%;
+    max-width: 600px; /* Alineado al tamaño max del formulario */
 	border-radius: 12px;
 	}
-	iframe{
+
+	iframe {
 	border-radius: 12px;
+    width: 100%; /* Ocupa todo el contenedor disponible */
+    height: 315px;
 	}
+
+    /* REGLAS RESPONSIVE PARA CELULARES */
+    @media screen and (max-width: 600px) {
+        body {
+            padding: 10px; /* Reduce márgenes externos en pantallas pequeñas */
+        }
+        .container {
+            padding: 16px; /* Ajusta la caja blanca internamente */
+        }
+        iframe {
+            height: 200px; /* Reduce la altura del video en celular para que no se estire */
+        }
+        li {
+            flex-direction: column; /* Apila fecha/concepto y precio en listas largas */
+            align-items: flex-start;
+            gap: 8px;
+        }
+        li > div {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+    }
     </style>
 </head>
 <body>
@@ -151,6 +187,19 @@
     <ul id="lista-gastos"></ul>
 </div>
 
+<div class="vid">
+<iframe 
+  src="https://www.youtube.com/embed/xS34-aK7yH4?si=AKr9E5OqtFmgRfhz" 
+title="YouTube video player" 
+frameborder="0" 
+allow="accelerometer; 
+autoplay; 
+clipboard-write; 
+encrypted-media;
+ gyroscope; 
+picture-in-picture;
+ web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+</div>
 
 <script>
     // Elementos del DOM
@@ -182,8 +231,6 @@
                     <span>$${parseFloat(gasto.monto).toFixed(2)}</span>
                     <button class="btn-delete" onclick="eliminarGasto(${index})">Eliminar</button>
                 </div>
-
-
             `;
             listaGastos.appendChild(li);
         });
@@ -223,20 +270,5 @@
     // Carga inicial al abrir la página
     mostrarGastos();
 </script>
-<div class="vid">
-<iframe 
-  width="560"
-  height="315" 
-  src="https://www.youtube.com/embed/xS34-aK7yH4?si=AKr9E5OqtFmgRfhz" 
-title="YouTube video player" 
-frameborder="0" 
-allow="accelerometer; 
-autoplay; 
-clipboard-write; 
-encrypted-media;
- gyroscope; 
-picture-in-picture;
- web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-</div>
 </body>
 </html>
